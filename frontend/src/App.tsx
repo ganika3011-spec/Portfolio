@@ -11,6 +11,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import profilePhoto from './assets/profile.png'
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || ''
+
 type EducationItem = {
   period: string
   degree: string
@@ -451,7 +453,7 @@ function App() {
       try {
         setLoading(true)
         setError(null)
-        const res = await fetch('/api/profile/')
+        const res = await fetch(`${API_BASE_URL}/api/profile/`)
         if (!res.ok) throw new Error(`Failed to load profile (${res.status})`)
         const data = (await res.json()) as Profile
         if (!cancelled) setProfile(data)
@@ -515,7 +517,7 @@ function App() {
     e.preventDefault()
     setContactStatus('submitting')
     try {
-      const res = await fetch('/api/contact/', {
+      const res = await fetch(`${API_BASE_URL}/api/contact/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
