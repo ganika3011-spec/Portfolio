@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+db.sqlite3
+.env
+
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+.DS_Store
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*

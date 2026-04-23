@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --color-theme-bg: var(--theme-bg);
+  --color-theme-text: var(--theme-text);
+  --color-theme-border: var(--theme-border);
+}
+
+:root {
+  --theme-bg: #f8fafc;
+  --theme-text: #0f172a;
+  --theme-border: #e2e8f0;
+}
+
+[data-theme='dark'] {
+  --theme-bg: #1e293b;
+  --theme-text: #e2e8f0;
+  --theme-border: rgba(255, 255, 255, 0.1);
+}
+
+html,
+body {
+  height: 100%;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
