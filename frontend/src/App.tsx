@@ -648,7 +648,7 @@ function App() {
           <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-6 text-red-100">
             {error}
             <div className="mt-2 text-sm text-red-200/80">
-              Make sure Django is running on <code>127.0.0.1:8000</code>.
+              Please check if the backend API is reachable at <code className="break-all">{API_BASE_URL || 'your backend URL'}</code>.
             </div>
           </div>
         ) : !profile ? (
