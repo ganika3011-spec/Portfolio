@@ -5,7 +5,6 @@ import {
   useReducedMotion,
   useScroll,
   useSpring,
-  useTransform,
 } from 'framer-motion'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
@@ -124,7 +123,6 @@ function Stars({ count = 48 }: { count?: number }) {
 function CustomCursor() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
-  const cursorRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleMove = (e: MouseEvent) => {
@@ -340,7 +338,6 @@ function App() {
     damping: 30,
     mass: 0.4,
   })
-  const blobY = useTransform(scrollYProgress, [0, 1], [0, -120])
 
   const gridStagger = useMemo(
     () => ({
