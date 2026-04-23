@@ -34,6 +34,8 @@ ALLOWED_HOSTS += ['localhost', '127.0.0.1', '.onrender.com']
 
 # CSRF Trusted Origins for admin and POST requests
 CSRF_TRUSTED_ORIGINS = [f"https://{h}" for h in ALLOWED_HOSTS if 'onrender.com' in h]
+if not any('onrender.com' in o for o in CSRF_TRUSTED_ORIGINS):
+    CSRF_TRUSTED_ORIGINS += ["https://.onrender.com"] 
 if not CSRF_TRUSTED_ORIGINS:
     CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
 
