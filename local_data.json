@@ -1,0 +1,550 @@
+[
+{
+  "model": "core.profile",
+  "pk": 1,
+  "fields": {
+    "name": "Ganika Chauhan",
+    "headline": "Python Django & Web Developer | MongoDB | AI & ML Enthusiast | Full Stack Developer",
+    "location": "Faridabad, Haryana, India",
+    "email": "ganika3011@gmail.com",
+    "phone": "8595287008",
+    "open_to_work": true,
+    "about": "I am a Computer Science student with a strong interest in Artificial Intelligence and Machine Learning. I also have experience in web development, backend programming, and working with databases. I enjoy building websites and smart systems that solve real problems. I am always eager to learn new technologies and want to grow my career by working on real-world projects in AI, ML, and software development.",
+    "github_link": null,
+    "linkedin_link": null,
+    "portfolio_link": "",
+    "photo": "",
+    "role_titles": "Full Stack Developer, Python Expert"
+  }
+},
+{
+  "model": "core.education",
+  "pk": 1,
+  "fields": {
+    "profile": 1,
+    "period": "2022 - 2026",
+    "degree": "B.Tech in Computer Science and Engineering",
+    "institution": "Satyug Darshan Institute of Engineering & Technology, Faridabad",
+    "details": "Current CGPA: 8.5 (2025 – Present)"
+  }
+},
+{
+  "model": "core.education",
+  "pk": 2,
+  "fields": {
+    "profile": 1,
+    "period": "2021 - 2022",
+    "degree": "12th – BSEH Board",
+    "institution": "Deep Senior Secondary School",
+    "details": "94%"
+  }
+},
+{
+  "model": "core.education",
+  "pk": 3,
+  "fields": {
+    "profile": 1,
+    "period": "2018 - 2019",
+    "degree": "10th – BSEH Board",
+    "institution": "Deep Senior Secondary School",
+    "details": "95%"
+  }
+},
+{
+  "model": "core.skillcategory",
+  "pk": 1,
+  "fields": {
+    "name": "Frontend",
+    "description": null,
+    "order": 0
+  }
+},
+{
+  "model": "core.skillcategory",
+  "pk": 2,
+  "fields": {
+    "name": "Backend",
+    "description": null,
+    "order": 0
+  }
+},
+{
+  "model": "core.skillcategory",
+  "pk": 3,
+  "fields": {
+    "name": "Machine Learning",
+    "description": null,
+    "order": 0
+  }
+},
+{
+  "model": "core.skillcategory",
+  "pk": 4,
+  "fields": {
+    "name": "Databases",
+    "description": null,
+    "order": 0
+  }
+},
+{
+  "model": "core.skillcategory",
+  "pk": 5,
+  "fields": {
+    "name": "Tools",
+    "description": null,
+    "order": 0
+  }
+},
+{
+  "model": "core.skillcategory",
+  "pk": 6,
+  "fields": {
+    "name": "Core",
+    "description": null,
+    "order": 0
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 1,
+  "fields": {
+    "category": 1,
+    "name": "HTML"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 2,
+  "fields": {
+    "category": 1,
+    "name": "CSS"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 3,
+  "fields": {
+    "category": 1,
+    "name": "JavaScript"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 4,
+  "fields": {
+    "category": 1,
+    "name": "Bootstrap"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 5,
+  "fields": {
+    "category": 1,
+    "name": "React"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 6,
+  "fields": {
+    "category": 2,
+    "name": "Python (Django)"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 7,
+  "fields": {
+    "category": 2,
+    "name": "Node.js"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 8,
+  "fields": {
+    "category": 2,
+    "name": "Express.js"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 9,
+  "fields": {
+    "category": 3,
+    "name": "Scikit-learn"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 10,
+  "fields": {
+    "category": 3,
+    "name": "Matplotlib"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 11,
+  "fields": {
+    "category": 3,
+    "name": "Pandas"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 12,
+  "fields": {
+    "category": 3,
+    "name": "NumPy"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 13,
+  "fields": {
+    "category": 3,
+    "name": "Tkinter"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 14,
+  "fields": {
+    "category": 4,
+    "name": "MongoDB"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 15,
+  "fields": {
+    "category": 5,
+    "name": "VS Code"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 16,
+  "fields": {
+    "category": 5,
+    "name": "Postman"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 17,
+  "fields": {
+    "category": 5,
+    "name": "MongoDB Compass"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 18,
+  "fields": {
+    "category": 6,
+    "name": "Data Structures and Algorithms"
+  }
+},
+{
+  "model": "core.skill",
+  "pk": 19,
+  "fields": {
+    "category": 4,
+    "name": "PostgreSQL"
+  }
+},
+{
+  "model": "core.project",
+  "pk": 1,
+  "fields": {
+    "profile": 1,
+    "title": "Resume Screening AI",
+    "image": "",
+    "stack": "Python (Flask), NLP, Machine Learning, HTML, CSS",
+    "description": "An AI-powered web application that uses NLP and Machine Learning to automatically extract information from resumes, categorize candidates, and match them with job requirements via a modern dark UI.",
+    "github_link": "",
+    "live_link": "https://resume-and-job-matching.onrender.com",
+    "order": 0
+  }
+},
+{
+  "model": "core.project",
+  "pk": 2,
+  "fields": {
+    "profile": 1,
+    "title": "ShoppingKart (E-commerce Platform)",
+    "image": "",
+    "stack": "React, JavaScript, UI/UX, E-commerce",
+    "description": "An online shopping platform with categories, product listing, cart actions, and a built-in shopping assistant widget.",
+    "github_link": "",
+    "live_link": "https://shoppingkart-rdlq.onrender.com",
+    "order": 1
+  }
+},
+{
+  "model": "core.project",
+  "pk": 3,
+  "fields": {
+    "profile": 1,
+    "title": "Fitness Website",
+    "image": "",
+    "stack": "HTML, CSS, JavaScript, Node.js, Express.js, MongoDB",
+    "description": "A fitness-focused website with backend and database integration.",
+    "github_link": "",
+    "live_link": "",
+    "order": 2
+  }
+},
+{
+  "model": "core.project",
+  "pk": 4,
+  "fields": {
+    "profile": 1,
+    "title": "Dance Registration Website",
+    "image": "",
+    "stack": "HTML, CSS, JavaScript, Node.js, Express.js, MongoDB",
+    "description": "A registration website for dance sign-ups with a simple backend.",
+    "github_link": "",
+    "live_link": "",
+    "order": 3
+  }
+},
+{
+  "model": "core.project",
+  "pk": 5,
+  "fields": {
+    "profile": 1,
+    "title": "Weather Forecast Prediction",
+    "image": "",
+    "stack": "Python, Machine Learning",
+    "description": "A basic ML project to predict weather forecast outcomes.",
+    "github_link": "",
+    "live_link": "",
+    "order": 4
+  }
+},
+{
+  "model": "core.project",
+  "pk": 6,
+  "fields": {
+    "profile": 1,
+    "title": "Stone, Paper, Scissor Game",
+    "image": "",
+    "stack": "Python, Tkinter",
+    "description": "A desktop GUI game built with Tkinter.",
+    "github_link": "",
+    "live_link": "",
+    "order": 5
+  }
+},
+{
+  "model": "core.project",
+  "pk": 7,
+  "fields": {
+    "profile": 1,
+    "title": "Weather Forecast Application",
+    "image": "",
+    "stack": "Python, Django, HTML, CSS, JavaScript",
+    "description": "A Django-based web app for weather forecasting.",
+    "github_link": "",
+    "live_link": "",
+    "order": 6
+  }
+},
+{
+  "model": "core.certification",
+  "pk": 1,
+  "fields": {
+    "profile": 1,
+    "name": "Generative AI Arcade game and Google Cloud Computing Foundation",
+    "file": ""
+  }
+},
+{
+  "model": "core.certification",
+  "pk": 2,
+  "fields": {
+    "profile": 1,
+    "name": "Quiz webinars organised by team ‘skillEcted’",
+    "file": ""
+  }
+},
+{
+  "model": "core.certification",
+  "pk": 3,
+  "fields": {
+    "profile": 1,
+    "name": "Basics of Python",
+    "file": ""
+  }
+},
+{
+  "model": "core.certification",
+  "pk": 4,
+  "fields": {
+    "profile": 1,
+    "name": "Basics of Machine Learning Algorithms",
+    "file": ""
+  }
+},
+{
+  "model": "core.certification",
+  "pk": 5,
+  "fields": {
+    "profile": 1,
+    "name": "Generative AI Studio",
+    "file": ""
+  }
+},
+{
+  "model": "core.certification",
+  "pk": 6,
+  "fields": {
+    "profile": 1,
+    "name": "Basics of Microsoft Power BI and DAX",
+    "file": ""
+  }
+},
+{
+  "model": "core.certification",
+  "pk": 7,
+  "fields": {
+    "profile": 1,
+    "name": "Prompt Design in Vertex AI",
+    "file": ""
+  }
+},
+{
+  "model": "core.certification",
+  "pk": 8,
+  "fields": {
+    "profile": 1,
+    "name": "Data Analytics",
+    "file": ""
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 1,
+  "fields": {
+    "name": "Test",
+    "email": "test@example.com",
+    "subject": "Hello",
+    "message": "Hi",
+    "created_at": "2026-04-22T10:57:04.651Z"
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 2,
+  "fields": {
+    "name": "monalisa",
+    "email": "chauhanganika684@gmail.com",
+    "subject": "i want to meet  you",
+    "message": "i like you",
+    "created_at": "2026-04-22T11:47:07.726Z"
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 3,
+  "fields": {
+    "name": "Test User",
+    "email": "test@example.com",
+    "subject": "Test Subject",
+    "message": "This is a test message to verify email logic.",
+    "created_at": "2026-04-22T11:51:09.193Z"
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 4,
+  "fields": {
+    "name": "dtrxew",
+    "email": "chauhanganika684@gmail.com",
+    "subject": "klxjfljfmij",
+    "message": "jxifwuxeirhnurieh",
+    "created_at": "2026-04-22T11:54:14.154Z"
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 5,
+  "fields": {
+    "name": "xswqdewq",
+    "email": "chauhanganika684@gmail.com",
+    "subject": "ewqxdwesz",
+    "message": "zefwwrdwszxec",
+    "created_at": "2026-04-22T11:57:45.077Z"
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 6,
+  "fields": {
+    "name": "ganika",
+    "email": "chauhanganika684@gmail.com",
+    "subject": "werdtfgv",
+    "message": "ijcfjifjkhew",
+    "created_at": "2026-04-22T12:01:33.937Z"
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 7,
+  "fields": {
+    "name": "ganika",
+    "email": "chauhanganika684@gmail.com",
+    "subject": "werdtfgv",
+    "message": "ijcfjifjkhew",
+    "created_at": "2026-04-22T12:01:47.391Z"
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 8,
+  "fields": {
+    "name": "esqr3qwsrwe",
+    "email": "chauhanganika684@gmail.com",
+    "subject": "uioxeuiefmuier",
+    "message": "xfiewufoxremgui",
+    "created_at": "2026-04-22T12:06:27.423Z"
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 9,
+  "fields": {
+    "name": "dewrwe",
+    "email": "chauhanganika684@gmail.com",
+    "subject": "jmixhnfwiux",
+    "message": "ferfcre",
+    "created_at": "2026-04-22T12:09:44.307Z"
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 10,
+  "fields": {
+    "name": "shivam",
+    "email": "shivam@gmail.com",
+    "subject": "",
+    "message": "i want to meet you",
+    "created_at": "2026-04-27T07:09:59.289Z"
+  }
+},
+{
+  "model": "core.contactmessage",
+  "pk": 11,
+  "fields": {
+    "name": "shivam",
+    "email": "shivam@gmail.com",
+    "subject": "regarding placement",
+    "message": "hiii, am shivam i want to meet you",
+    "created_at": "2026-04-27T07:11:45.831Z"
+  }
+}
+]
