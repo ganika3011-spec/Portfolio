@@ -8,11 +8,11 @@ LOCAL_DATA_FILE = 'local_data.json'
 RENDER_API_URL = 'https://portfolio-o7ii.onrender.com/api/seed/'
 
 def get_secret_key():
-    # Try to get SECRET_KEY from the backend/settings.py or .env
+    # Try to get SECRET_KEY from the backend/settings.py
     try:
         with open('backend/settings.py', 'r') as f:
             for line in f:
-                if 'SECRET_KEY' in line and '=' in line:
+                if 'SECRET_KEY' in line and '=' in line and 'os.getenv' not in line:
                     return line.split('=')[1].strip().strip("'").strip('"')
     except:
         pass
