@@ -160,3 +160,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'ganika3011@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = 'ganika3011@gmail.com'
+
+# Media files (Uploads)
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'

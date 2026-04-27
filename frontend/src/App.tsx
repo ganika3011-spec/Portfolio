@@ -21,6 +21,7 @@ type EducationItem = {
 
 type ProjectItem = {
   title: string
+  image?: string
   stack: string[]
   description?: string
   links?: {
@@ -29,14 +30,11 @@ type ProjectItem = {
   }
 }
 
-type Skills = {
-  frontend: string[]
-  backend: string[]
-  machine_learning: string[]
-  databases: string[]
-  tools: string[]
-  core: string[]
+type SkillGroup = {
+  items: string[]
+  description: string
 }
+type Skills = Record<string, SkillGroup>
 
 type Profile = {
   name: string
@@ -44,6 +42,7 @@ type Profile = {
   location: string
   email: string
   phone: string
+  photo?: string
   open_to_work?: boolean
   links?: {
     github?: string
@@ -61,7 +60,8 @@ type Profile = {
     description?: string
     link?: string
   }>
-  certifications: string[]
+  certifications: Array<{ name: string; file: string }>
+  role_titles: string
 }
 
 function Stars({ count = 48 }: { count?: number }) {
@@ -472,25 +472,16 @@ function App() {
 
   const skillGroups = useMemo(() => {
     if (!profile) return []
-    return [
-      { label: 'Frontend', items: profile.skills.frontend },
-      { label: 'Backend', items: profile.skills.backend },
-      { label: 'Machine Learning', items: profile.skills.machine_learning },
-      { label: 'Databases', items: profile.skills.databases },
-      { label: 'Tools', items: profile.skills.tools },
-      { label: 'Core', items: profile.skills.core },
-    ]
+    return Object.entries(profile.skills).map(([key, data]) => ({
+      label: key.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+      items: data.items,
+      description: data.description
+    }))
   }, [profile])
 
   const stackChips = useMemo(() => {
     if (!profile) return []
-    const all = [
-      ...profile.skills.frontend,
-      ...profile.skills.backend,
-      ...profile.skills.databases,
-      ...profile.skills.machine_learning,
-      ...profile.skills.tools,
-    ]
+    const all = Object.values(profile.skills).flatMap(g => g.items)
     return Array.from(new Set(all))
   }, [profile])
 
@@ -504,7 +495,7 @@ function App() {
     if (activeSkillFilter === 'All') return profile.projects
     const filterKey = activeSkillFilter
     const filterTerms = new Set(
-      (profile.skills as Record<string, string[]>)[filterKey] ?? [],
+      profile.skills[filterKey]?.items ?? [],
     )
     return profile.projects.filter((p) => p.stack.some((t) => filterTerms.has(t)))
   }, [activeSkillFilter, profile])
@@ -687,7 +678,7 @@ function App() {
                     </h1>
                     <div className="text-xl font-bold md:text-3xl">
                       <Typewriter
-                        words={[
+                        words={profile.role_titles ? profile.role_titles.split(',').map(t => t.trim()) : [
                           'Python Django Expert',
                           'Full Stack Engineer',
                           'AI/ML Enthusiast',
@@ -751,7 +742,7 @@ function App() {
                     >
                       <div className="cursor-zoom-in overflow-hidden rounded-[2.5rem] border-2 border-white/20 bg-slate-800 shadow-2xl ring-1 ring-white/20">
                         <img
-                          src={profilePhoto}
+                          src={profile?.photo || profilePhoto}
                           alt={profile?.name}
                           className="h-64 w-48 object-cover md:h-80 md:w-60 grayscale hover:grayscale-0 transition-all duration-700"
                           onClick={() => setPhotoOpen(true)}
@@ -844,17 +835,7 @@ function App() {
                         ))}
                       </div>
                       <p className={`mt-6 text-sm leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-700'} group-hover:${isDark ? 'text-slate-300' : 'text-slate-900'}`}>
-                        {g.label === 'Frontend'
-                          ? 'Crafting high-performance, pixel-perfect user interfaces with modern React ecosystems.'
-                          : g.label === 'Backend'
-                            ? 'Architecting scalable server-side logic and robust API infrastructures with Django and Node.'
-                            : g.label === 'Machine Learning'
-                              ? 'Leveraging data-driven insights to build intelligent models and predictive analytics.'
-                              : g.label === 'Databases'
-                                ? 'Optimizing data flow with sophisticated NoSQL schemas and high-efficiency queries.'
-                                : g.label === 'Tools'
-                                  ? 'Streamlining development cycles with advanced devtools and automated workflows.'
-                                  : 'Deep-rooted understanding of algorithmic efficiency and system architecture.'}
+                        {g.description || 'Deep-rooted understanding of algorithmic efficiency and system architecture.'}
                       </p>
                     </SpotlightCard>
                   </motion.div>
@@ -917,9 +898,17 @@ function App() {
                       >
                         <div className="relative aspect-video overflow-hidden rounded-t-[2rem] bg-slate-800/50">
                           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-60" />
-                          <div className="flex h-full items-center justify-center text-4xl opacity-40 grayscale group-hover/card:grayscale-0 group-hover/card:scale-110 transition-all duration-700">
-                            {p.stack[0]?.toLowerCase().includes('python') ? '🐍' : '💻'}
-                          </div>
+                          {p.image ? (
+                            <img
+                              src={p.image.startsWith('http') ? p.image : `${API_BASE_URL}${p.image}`}
+                              alt={p.title}
+                              className="h-full w-full object-cover transition-transform duration-700 group-hover/card:scale-110"
+                            />
+                          ) : (
+                            <div className="flex h-full items-center justify-center text-4xl opacity-40 grayscale group-hover/card:grayscale-0 group-hover/card:scale-110 transition-all duration-700">
+                              {p.stack[0]?.toLowerCase().includes('python') ? '🐍' : '💻'}
+                            </div>
+                          )}
                           <div className="absolute bottom-4 left-4 right-4">
                             <div className="flex flex-wrap gap-2">
                               {p.stack.slice(0, 3).map((t) => (
@@ -1011,18 +1000,50 @@ function App() {
                 whileInView="show"
                 viewport={{ once: true, amount: 0.2 }}
               >
-                {profile.certifications.map((c) => (
-                  <motion.div key={c} variants={gridItem}>
-                    <SpotlightCard className="p-6">
-                      <div className="flex items-center gap-4">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 ring-1 ring-sky-500/20">
-                          📜
+                {profile.certifications.map((c) => {
+                  const certName = typeof c === 'string' ? c : c.name
+                  const certFile = typeof c === 'string' ? undefined : (c.file.startsWith('http') ? c.file : `${API_BASE_URL}${c.file}`)
+                  
+                  return (
+                    <motion.div key={certName} variants={gridItem}>
+                      <SpotlightCard className="p-6">
+                        <div className="flex items-center justify-between gap-4">
+                          <div className="flex items-center gap-4">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 ring-1 ring-sky-500/20">
+                              📜
+                            </div>
+                            <div className={`text-base font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                              {certFile ? (
+                                <a 
+                                  href={certFile} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="hover:text-violet-400 transition-colors"
+                                >
+                                  {certName}
+                                </a>
+                              ) : certName}
+                            </div>
+                          </div>
+                          {certFile && (
+                            <div className="flex gap-2">
+                              <a
+                                href={certFile}
+                                download
+                                className="flex h-8 w-8 items-center justify-center rounded-lg bg-violet-500/10 text-violet-400 ring-1 ring-violet-500/20 hover:bg-violet-500/20 transition-all"
+                                title="Download Certificate"
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                              </a>
+                            </div>
+                          )}
                         </div>
-                        <div className={`text-base font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{c}</div>
-                      </div>
-                    </SpotlightCard>
-                  </motion.div>
-                ))}
+                      </SpotlightCard>
+                    </motion.div>
+                  )
+                })}
               </motion.div>
             </RevealSection>
 
@@ -1036,59 +1057,89 @@ function App() {
                   <p className={`mt-6 text-lg ${isDark ? 'text-slate-300' : 'text-slate-600'} font-medium`}>
                     Have a vision? Let’s turn it into a high-performance reality.
                   </p>
-
-                  <form className="mt-12 space-y-8" onSubmit={onSubmitContact}>
-                    <div className="grid gap-8 md:grid-cols-2">
-                      <div className="group space-y-3">
-                        <label className={`text-xs font-black uppercase tracking-widest ${isDark ? 'text-slate-400' : 'text-slate-600'} transition-colors group-focus-within:text-violet-400`} htmlFor="name">Name</label>
-                        <input
-                          id="name"
-                          type="text"
-                          required
-                          placeholder="What should I call you?"
-                          value={contactName}
-                          onChange={(e) => setContactName(e.target.value)}
-                          className={`w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 ${isDark ? 'text-slate-100' : 'text-slate-900'} placeholder:text-slate-600 outline-none transition-all focus:border-violet-500/50 focus:bg-white/10 focus:ring-4 focus:ring-violet-500/10`}
-                        />
-                      </div>
-                      <div className="group space-y-3">
-                        <label className={`text-xs font-black uppercase tracking-widest ${isDark ? 'text-slate-400' : 'text-slate-600'} transition-colors group-focus-within:text-sky-400`} htmlFor="email">Email</label>
-                        <input
-                          id="email"
-                          type="email"
-                          required
-                          placeholder="Where can I reply?"
-                          value={contactEmail}
-                          onChange={(e) => setContactEmail(e.target.value)}
-                          className={`w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 ${isDark ? 'text-slate-100' : 'text-slate-900'} placeholder:text-slate-600 outline-none transition-all focus:border-sky-500/50 focus:bg-white/10 focus:ring-4 focus:ring-sky-500/10`}
-                        />
-                      </div>
-                    </div>
-                    <div className="group space-y-3">
-                      <label className={`text-xs font-black uppercase tracking-widest ${isDark ? 'text-slate-400' : 'text-slate-600'} transition-colors group-focus-within:text-fuchsia-400`} htmlFor="message">Message</label>
-                      <textarea
-                        id="message"
-                        required
-                        rows={6}
-                        placeholder="Tell me about your amazing project..."
-                        value={contactMessage}
-                        onChange={(e) => setContactMessage(e.target.value)}
-                        className={`w-full resize-none rounded-2xl border border-white/10 bg-white/5 px-5 py-4 ${isDark ? 'text-slate-100' : 'text-slate-900'} placeholder:text-slate-600 outline-none transition-all focus:border-fuchsia-500/50 focus:bg-white/10 focus:ring-4 focus:ring-fuchsia-500/10`}
-                      />
-                    </div>
-                    <Magnetic strength={0.1}>
-                      <button
-                        type="submit"
-                        disabled={contactStatus === 'submitting'}
-                        className={`group relative w-full overflow-hidden rounded-2xl bg-violet-600 py-5 text-base font-black uppercase tracking-widest ${isDark ? 'text-slate-100' : 'text-slate-900'} transition-all hover:bg-violet-500 active:scale-[0.98] disabled:opacity-50`}
+                  <AnimatePresence mode="wait">
+                    {contactStatus === 'sent' ? (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="flex flex-col items-center justify-center space-y-4 py-20 text-center"
                       >
-                        <span className="relative z-10 flex items-center justify-center gap-2">
-                          {contactStatus === 'submitting' ? 'Transmitting...' : 'Launch Message 🚀'}
-                        </span>
-                        <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 -translate-x-full group-hover:translate-x-full" />
-                      </button>
-                    </Magnetic>
-                  </form>
+                        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-500/10 text-green-500 ring-4 ring-green-500/20">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <h3 className="text-2xl font-bold text-white">Message Transmitted!</h3>
+                        <p className="text-slate-400">I'll get back to you across the digital void soon.</p>
+                      </motion.div>
+                    ) : (
+                      <form className="mt-12 space-y-8" onSubmit={onSubmitContact}>
+                        <div className="grid gap-8 md:grid-cols-2">
+                          <div className="group space-y-3">
+                            <label className={`text-xs font-black uppercase tracking-widest ${isDark ? 'text-slate-400' : 'text-slate-600'} transition-colors group-focus-within:text-violet-400`} htmlFor="name">Name</label>
+                            <input
+                              id="name"
+                              type="text"
+                              required
+                              placeholder="What should I call you?"
+                              value={contactName}
+                              onChange={(e) => setContactName(e.target.value)}
+                              className={`w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 ${isDark ? 'text-slate-100' : 'text-slate-900'} placeholder:text-slate-600 outline-none transition-all focus:border-violet-500/50 focus:bg-white/10 focus:ring-4 focus:ring-violet-500/10`}
+                            />
+                          </div>
+                          <div className="group space-y-3">
+                            <label className={`text-xs font-black uppercase tracking-widest ${isDark ? 'text-slate-400' : 'text-slate-600'} transition-colors group-focus-within:text-sky-400`} htmlFor="email">Email</label>
+                            <input
+                              id="email"
+                              type="email"
+                              required
+                              placeholder="Where can I reply?"
+                              value={contactEmail}
+                              onChange={(e) => setContactEmail(e.target.value)}
+                              className={`w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 ${isDark ? 'text-slate-100' : 'text-slate-900'} placeholder:text-slate-600 outline-none transition-all focus:border-sky-500/50 focus:bg-white/10 focus:ring-4 focus:ring-sky-500/10`}
+                            />
+                          </div>
+                        </div>
+                        <div className="group space-y-3">
+                          <label className={`text-xs font-black uppercase tracking-widest ${isDark ? 'text-slate-400' : 'text-slate-600'} transition-colors group-focus-within:text-fuchsia-400`} htmlFor="subject">Subject</label>
+                          <input
+                            id="subject"
+                            type="text"
+                            required
+                            placeholder="What's this about?"
+                            value={contactSubject}
+                            onChange={(e) => setContactSubject(e.target.value)}
+                            className={`w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 ${isDark ? 'text-slate-100' : 'text-slate-900'} placeholder:text-slate-600 outline-none transition-all focus:border-fuchsia-500/50 focus:bg-white/10 focus:ring-4 focus:ring-fuchsia-500/10`}
+                          />
+                        </div>
+                        <div className="group space-y-3">
+                          <label className={`text-xs font-black uppercase tracking-widest ${isDark ? 'text-slate-400' : 'text-slate-600'} transition-colors group-focus-within:text-fuchsia-400`} htmlFor="message">Message</label>
+                          <textarea
+                            id="message"
+                            required
+                            rows={6}
+                            placeholder="Tell me about your amazing project..."
+                            value={contactMessage}
+                            onChange={(e) => setContactMessage(e.target.value)}
+                            className={`w-full resize-none rounded-2xl border border-white/10 bg-white/5 px-5 py-4 ${isDark ? 'text-slate-100' : 'text-slate-900'} placeholder:text-slate-600 outline-none transition-all focus:border-fuchsia-500/50 focus:bg-white/10 focus:ring-4 focus:ring-fuchsia-500/10`}
+                          />
+                        </div>
+                        <Magnetic strength={0.1}>
+                          <button
+                            type="submit"
+                            disabled={contactStatus === 'submitting'}
+                            className={`group relative w-full overflow-hidden rounded-2xl bg-violet-600 py-5 text-base font-black uppercase tracking-widest ${isDark ? 'text-slate-100' : 'text-slate-900'} transition-all hover:bg-violet-500 active:scale-[0.98] disabled:opacity-50`}
+                          >
+                            <span className="relative z-10 flex items-center justify-center gap-2">
+                              {contactStatus === 'submitting' ? 'Transmitting...' : 'Launch Message 🚀'}
+                            </span>
+                            <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 -translate-x-full group-hover:translate-x-full" />
+                          </button>
+                        </Magnetic>
+                      </form>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 <div className="space-y-8">
@@ -1275,7 +1326,7 @@ function App() {
               </div>
               <div className="bg-slate-50 p-4">
                 <img
-                  src={profilePhoto}
+                  src={profile?.photo || profilePhoto}
                   alt={profile?.name ? `${profile.name} profile` : 'Profile'}
                   className="mx-auto max-h-[70vh] w-auto rounded-xl object-contain"
                 />

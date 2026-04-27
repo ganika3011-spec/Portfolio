@@ -21,8 +21,14 @@ from django.http import JsonResponse
 def home(request):
     return JsonResponse({"status": "Django is alive", "message": "Hit /api/profile/ for data"})
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('', home),
     path('admin/', admin.site.urls),
     path("api/", include("core.urls")),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
