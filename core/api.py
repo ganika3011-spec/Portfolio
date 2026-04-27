@@ -66,3 +66,37 @@ class ContactView(APIView):
 class HealthView(APIView):
     def get(self, request):
         return Response({"status": "ok"})
+
+from django.core.management import call_command
+from django.conf import settings
+import io
+import json
+import os
+
+class SeedView(APIView):
+    """
+    Securely seeds the database with local data.
+    Requires the SECRET_KEY in the 'X-Secret-Key' header.
+    """
+    def post(self, request):
+        secret_key = request.headers.get('X-Secret-Key')
+        if not secret_key or secret_key != settings.SECRET_KEY:
+            return Response({"error": "Unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        try:
+            data = request.data
+            # Convert the list of dicts back to a file-like object for loaddata
+            json_file = io.StringIO(json.dumps(data))
+            
+            # Use call_command to load the data
+            import tempfile
+            with tempfile.NamedTemporaryFile(suffix='.json', mode='w', delete=False) as f:
+                json.dump(data, f)
+                temp_path = f.name
+            
+            call_command('loaddata', temp_path)
+            os.remove(temp_path)
+            
+            return Response({"ok": True, "message": "Data seeded successfully!"})
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
