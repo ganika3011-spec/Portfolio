@@ -168,7 +168,7 @@ function MeshBackground({ isDark }: { isDark: boolean }) {
           scale: [1, 1.2, 0.9, 1],
         }}
         transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute -left-1/4 -top-1/4 h-[900px] w-[900px] rounded-full bg-violet-500/20 blur-[180px]"
+        className="absolute -left-1/4 -top-1/4 h-[900px] w-[900px] rounded-full bg-violet-500/20 blur-[60px]"
       />
       <motion.div
         animate={{
@@ -177,7 +177,7 @@ function MeshBackground({ isDark }: { isDark: boolean }) {
           scale: [1, 0.8, 1.2, 1],
         }}
         transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute -right-1/4 top-1/6 h-[1000px] w-[1000px] rounded-full bg-sky-400/20 blur-[180px]"
+        className="absolute -right-1/4 top-1/6 h-[1000px] w-[1000px] rounded-full bg-sky-400/20 blur-[60px]"
       />
       <motion.div
         animate={{
@@ -186,10 +186,9 @@ function MeshBackground({ isDark }: { isDark: boolean }) {
           scale: [1, 1.1, 0.8, 1],
         }}
         transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute bottom-1/6 left-1/4 h-[850px] w-[850px] rounded-full bg-fuchsia-400/20 blur-[180px]"
+        className="absolute bottom-1/6 left-1/4 h-[850px] w-[850px] rounded-full bg-fuchsia-400/20 blur-[60px]"
       />
       <div className={`absolute inset-0 transition-colors duration-700 ${isDark ? 'bg-gradient-to-b from-[#1e293b]/60 via-transparent to-[#1e293b]/90' : 'bg-gradient-to-b from-white/40 via-transparent to-white/60'}`} />
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.25] mix-blend-overlay" />
     </div>
   )
 }
@@ -583,7 +582,7 @@ function App() {
 
         <MeshBackground isDark={isDark} />
         <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-          {!reduceMotion ? <Stars count={64} /> : null}
+          {!reduceMotion ? <Stars count={32} /> : null}
         </div>
 
       <header className={`sticky top-0 z-40 border-b transition-colors duration-700 backdrop-blur-3xl ${isDark ? 'border-white/5 bg-[#1e293b]/80' : 'border-slate-200 bg-white/70'}`}>

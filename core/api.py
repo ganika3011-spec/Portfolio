@@ -55,6 +55,15 @@ PROFILE = {
     },
     "projects": [
         {
+            "title": "Resume Screening AI",
+            "stack": ["Python (Flask)", "NLP", "Machine Learning", "HTML", "CSS"],
+            "description": (
+                "An AI-powered web application that uses NLP and Machine Learning to automatically extract information from resumes, "
+                "categorize candidates, and match them with job requirements via a modern dark UI."
+            ),
+            "links": {"github": "", "live": "https://resume-and-job-matching.onrender.com"},
+        },
+        {
             "title": "ShoppingKart (E-commerce Platform)",
             "stack": ["React", "JavaScript", "UI/UX", "E-commerce"],
             "description": (
